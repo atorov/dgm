@@ -1,7 +1,28 @@
 {
   "name": "dgm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
+  "description": "Diesel Generator Maintenance",
+    "keywords": [
+      "react",
+      "reactjs",
+      "aws",
+      "serverless",
+      "diesel",
+      "generator",
+      "maintenance"
+    ],
+  "homepage": ".",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atorov/dgm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/atorov/dgm/issues"
+  },
+  "author": "atorov",
+  "license": "MIT",
+  "main": "src/index.js",
   "dependencies": {
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
