@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import logo from "../../assets/img/logo.svg";
+import Home from "../Home/";
 
 import "./style.css";
 
@@ -13,30 +13,33 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            forms: {
-                all: {
-                    status: "",
-                    data: [],
-                },
-                selected: {
-                    status: "",
-                    data: {},
-                },
+            router: {
+                path: "",
+                params: {},
             },
         };
     }
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <p className="App-intro">
-                    To get started, edit <code>src/...</code> and save to reload.
-                </p>
+            <div>
+                {this.router()}
             </div>
         );
     }
+
+    // Router ------------------------------------------------------------------
+    router = () => {
+        const propSet = {
+            ...this.props,
+            appState: this.state,
+            onSetState: (obj, cb) => this.setState(obj, cb),
+        };
+        switch (this.state.router.path) {
+            case "":
+            case "home": return <Home {...propSet} />;
+
+            default: return <h1>404 Not found!</h1>;
+        }
+    };
 }
