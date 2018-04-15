@@ -6,8 +6,6 @@ import * as lib from "./lib/";
 
 import App from "./components/App/";
 
-import "./style.css";
-
 ReactDOM.render(
     <App lib={lib} />,
     document.getElementById("root"),

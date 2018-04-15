@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import CssBaseline from "material-ui/CssBaseline";
+
 import Home from "../Home/";
 
 import "./style.css";
@@ -22,9 +24,10 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
+                <CssBaseline />
                 {this.router()}
-            </div>
+            </React.Fragment>
         );
     }
 
