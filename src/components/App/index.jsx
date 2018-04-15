@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import CssBaseline from "material-ui/CssBaseline";
 
 import Home from "../Home/";
+import NavBar from "../NavBar/";
 
 import "./style.css";
 
@@ -26,6 +27,7 @@ export default class App extends React.Component {
         return (
             <React.Fragment>
                 <CssBaseline />
+                <NavBar />
                 {this.router()}
             </React.Fragment>
         );
