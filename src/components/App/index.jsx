@@ -1,17 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 import CssBaseline from "material-ui/CssBaseline";
+import { withTheme } from "material-ui/styles";
 
 import Home from "../Home/";
 import NavBar from "../NavBar/";
 
 import "./style.css";
 
-export default class App extends React.Component {
-    static propTypes = {
-        lib: PropTypes.object.isRequired,
-    };
+class App extends React.Component {
+    static propTypes = {};
 
     constructor(props) {
         super(props);
@@ -28,7 +27,9 @@ export default class App extends React.Component {
             <React.Fragment>
                 <CssBaseline />
                 <NavBar />
-                {this.router()}
+                <div style={{ padding: this.props.theme.spacing.unit * 2 }}>
+                    {this.router()}
+                </div>
             </React.Fragment>
         );
     }
@@ -48,3 +49,5 @@ export default class App extends React.Component {
         }
     };
 }
+
+export default withTheme()(App);
