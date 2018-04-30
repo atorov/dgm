@@ -1,21 +1,24 @@
-import React from "react";
-// import PropTypes from "prop-types";
+import React from 'react';
+// import PropTypes from 'prop-types';
 
-import Button from "material-ui/Button";
-
-import "./style.css";
+import Button from 'material-ui/Button';
+import Divider from 'material-ui/Divider';
+import Typography from 'material-ui/Typography';
 
 export default class Home extends React.Component {
-    static propTypes = {
-        // lib: PropTypes.object.isRequired,
-    };
-
     render() {
         return (
             <div>
-                <h1>Home page</h1>
+                <Typography
+                    variant='title'
+                    color='inherit'
+                >
+                    Home Page
+                </Typography>
+                <br /><Divider /><br />
 
-                <Button variant="raised" color="primary">
+                <br /><Divider /><br />
+                <Button variant='raised' color='primary'>
                     Button
                 </Button>
             </div>

@@ -1,16 +1,16 @@
-import React from "react";
-// import PropTypes from "prop-types";
+import React from 'react';
+// import PropTypes from 'prop-types';
 
-import AppBar from "material-ui/AppBar";
-import IconButton from "material-ui/IconButton";
-import Menu, { MenuItem } from 'material-ui/Menu';
-import Toolbar from "material-ui/Toolbar";
-import Typography from "material-ui/Typography";
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+// import Menu, { MenuItem } from 'material-ui/Menu';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
 
-import IconAccountCircle from '@material-ui/icons/AccountCircle';
-// import IconMenu from "@material-ui/icons/Menu";
-
-import "./style.css";
+// SVG icons
+// import IconAccountCircle from '@material-ui/icons/AccountCircle';
+import IconHome from '@material-ui/icons/Home';
+// import IconMenu from '@material-ui/icons/Menu';
 
 export default class NavBar extends React.Component {
     static propTypes = {};
@@ -24,28 +24,34 @@ export default class NavBar extends React.Component {
 
     render() {
         return (
-            <AppBar position="static">
+            <AppBar position='static'>
                 <Toolbar>
                     {/* <IconButton
-                        color="inherit"
+                        color='inherit'
                         onClick={() => {}}
                     >
                         <IconMenu />
                     </IconButton> */}
+                    <IconButton
+                        color='inherit'
+                        onClick={(event) => this.props.onSetRouter(':HOME:')}
+                    >
+                        <IconHome />
+                    </IconButton>
                     <Typography
-                        variant="title"
-                        color="inherit"
+                        variant='title'
+                        color='inherit'
                         style={{ flex: 1 }}
                     >
-                        Title
-                        </Typography>
-                    <IconButton
-                        color="inherit"
+                        DGM
+                    </Typography>
+                    {/* <IconButton
+                        color='inherit'
                         onClick={(event) => this.setState({ anchorEl: event.currentTarget })}
                     >
                         <IconAccountCircle />
-                    </IconButton>
-                    <Menu
+                    </IconButton> */}
+                    {/* <Menu
                         anchorEl={this.state.anchorEl}
                         open={!!this.state.anchorEl}
                         onClose={() => this.setState({ anchorEl: null })}
@@ -56,7 +62,7 @@ export default class NavBar extends React.Component {
                         <MenuItem onClick={() => {}}>
                             Option 2
                         </MenuItem>
-                    </Menu>
+                    </Menu> */}
                 </Toolbar>
             </AppBar>
         );
