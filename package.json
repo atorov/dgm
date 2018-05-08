@@ -1,6 +1,6 @@
 {
   "name": "dgm",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "private": true,
   "description": "Diesel Generator Maintenance",
   "keywords": [
@@ -27,6 +27,7 @@
     "@material-ui/icons": "^1.0.0-beta.42",
     "axios": "^0.18.0",
     "material-ui": "^1.0.0-beta.41",
+    "moment": "^2.22.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-scripts": "1.1.4"

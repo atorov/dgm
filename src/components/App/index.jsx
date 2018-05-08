@@ -4,6 +4,7 @@ import React from 'react';
 import CssBaseline from 'material-ui/CssBaseline';
 import { withTheme } from 'material-ui/styles';
 
+import FormAddNew from '../FormAddNew/';
 import Home from '../Home/';
 import NavBar from '../NavBar/';
 
@@ -12,7 +13,7 @@ import './style.css';
 class App extends React.Component {
     static propTypes = {};
 
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.state = {
             router: {
@@ -23,12 +24,12 @@ class App extends React.Component {
     }
 
     // Helpers -----------------------------------------------------------------
-    onSetRouter = (path, params) => this.setState({ router: { ...this.state.router, path, params } });
+    onSetRouter = (path, params, cb) => this.setState({ router: { ...this.state.router, path, params } }, cb);
 
     onSetState = (obj, cb) => this.setState(obj, cb);
 
     // Main render -------------------------------------------------------------
-    render() {
+    render () {
         const propSet = {
             ...this.props,
             appState: this.state,
@@ -37,13 +38,13 @@ class App extends React.Component {
         };
 
         return (
-            <React.Fragment>
+            <div className='app'>
                 <CssBaseline />
                 <NavBar {...propSet} />
                 <div style={{ padding: this.props.theme.spacing.unit * 2 }}>
                     {this.router(propSet)}
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 
@@ -52,8 +53,15 @@ class App extends React.Component {
         switch (this.state.router.path) {
             case '':
             case ':HOME:': return <Home {...propSet} />;
+            case ':FORM:ADD_NEW:': return <FormAddNew {...propSet} />;
 
-            default: return <h1>404 Not found!</h1>;
+            default: return (
+                <React.Fragment>
+                    <h1>404 Not found!</h1>
+                    <p><strong>path:</strong> <em>{this.state.router.path}</em></p>
+                    <p><strong>params:</strong> <em>{JSON.stringify(this.state.router.params, null, 2)}</em></p>
+                </React.Fragment>
+            );
         }
     };
 }

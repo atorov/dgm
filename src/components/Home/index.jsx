@@ -1,26 +1,114 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 
+import moment from 'moment';
+
+import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import Input from 'material-ui/Input';
+import { LinearProgress } from 'material-ui/Progress';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import { MenuItem } from 'material-ui/Menu';
+import Select from 'material-ui/Select';
 
-export default class Home extends React.Component {
-    render() {
+// SVG icons
+import IconAdd from '@material-ui/icons/Add';
+import IconFile from '@material-ui/icons/InsertDriveFile';
+
+export default class extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            status: '',
+            forms: [],
+            filters: ':ALL:',
+        };
+    }
+
+    componentDidMount () {
+        this.props.lib.getForms()
+            .then((forms) => {
+                this.setState({
+                    status: ':READY:',
+                    forms,
+                });
+            })
+            .catch((reason) => {
+                console.error(':::', reason);
+            });
+    }
+
+    render () {
+        if (this.state.status !== ':READY:') return <LinearProgress />;
+
         return (
             <div>
-                <Typography
-                    variant='title'
-                    color='inherit'
-                >
-                    Home Page
-                </Typography>
+                <div style={{
+                    display: 'flex',
+                    flexFlow: 'row nowrap',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                }}>
+                    <FormControl component='div'>
+                        <Select
+                            value={this.state.filters}
+                            input={<Input name='filter' />}
+                            autoWidth
+                            onChange={(event) => this.setState(
+                                {
+                                    status: ':LOADING:',
+                                    filters: event.target.value,
+                                },
+                                () => this.props.lib.getForms(this.state.filters)
+                                    .then((forms) => {
+                                        this.setState({
+                                            status: ':READY:',
+                                            forms,
+                                        });
+                                    })
+                                    .catch((reason) => {
+                                        console.error(':::', reason);
+                                    }),
+                            )}
+                        >
+                            <MenuItem value=':ALL:'><em>All</em></MenuItem>
+                            <MenuItem value=':COMPLETED:'>Completed</MenuItem>
+                            <MenuItem value=':IN_PROGRESS:'>In progress</MenuItem>
+                        </Select>
+                        <FormHelperText>Filter by status</FormHelperText>
+                    </FormControl>
+                    <div>
+                        <Button
+                            variant='raised'
+                            color='primary'
+                            onClick={() => this.props.onSetRouter(':FORM:ADD_NEW:')}
+                        >
+                            <IconAdd /> Add new
+                        </Button>
+                    </div>
+                </div>
                 <br /><Divider /><br />
 
+                <List>
+                    {this.state.forms.map((form) => (
+                        <ListItem
+                            key={form.id}
+                            button
+                            onClick={() => this.props.onSetRouter(':FORM:EDIT:', { id: form.id })}
+                        >
+                            <Avatar>
+                                <IconFile />
+                            </Avatar>
+                            <ListItemText
+                                primary={form.dgs}
+                                secondary={`Created at: ${moment.unix(form.createdAt).format('YYYY-MM-DD')}, Updated at: ${form.updatedAt ? moment.unix(form.updatedAt).format('YYYY-MM-DD'): '---'}`}
+                            />
+                        </ListItem>
+                    ))}
+                </List>
                 <br /><Divider /><br />
-                <Button variant='raised' color='primary'>
-                    Button
-                </Button>
             </div>
         );
     }
