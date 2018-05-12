@@ -16,6 +16,7 @@ import Select from 'material-ui/Select';
 import IconAdd from '@material-ui/icons/Add';
 import IconFile from '@material-ui/icons/InsertDriveFile';
 import IconInsertDriveFile from '@material-ui/icons/InsertDriveFile';
+import IconSwapHoriz from '@material-ui/icons/SwapHoriz';
 
 export default class extends React.Component {
     constructor(props) {
@@ -87,9 +88,17 @@ export default class extends React.Component {
                         <Button
                             variant='raised'
                             color='primary'
+                            style={{ marginRight: this.props.theme.spacing.unit + 'px' }}
                             onClick={() => this.props.onSetRouter(':REPORT:')}
                         >
                             <IconInsertDriveFile /> Report
+                        </Button>
+                        <Button
+                            variant='raised'
+                            color='primary'
+                            onClick={() => this.props.onSetRouter(':API:HEALTH:')}
+                        >
+                            <IconSwapHoriz /> API Health
                         </Button>
                     </div>
                 </div>

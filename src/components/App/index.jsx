@@ -4,6 +4,7 @@ import React from 'react';
 import CssBaseline from 'material-ui/CssBaseline';
 import { withTheme } from 'material-ui/styles';
 
+import APIHealth from '../APIHealth/';
 import FormAddNew from '../FormAddNew/';
 import FormEdit from '../FormEdit/';
 import Home from '../Home/';
@@ -53,10 +54,11 @@ class App extends React.Component {
     // Router ------------------------------------------------------------------
     router = (propSet) => {
         switch (this.state.router.path) {
-            case '':
-            case ':HOME:': return <Home {...propSet} />;
+            case ':API:HEALTH:': return <APIHealth {...propSet} />;
             case ':FORM:ADD_NEW:': return <FormAddNew {...propSet} />;
             case ':FORM:EDIT:': return <FormEdit {...propSet} />;
+            case '':
+            case ':HOME:': return <Home {...propSet} />;
             case ':REPORT:': return <Report {...propSet} />;
 
             default: return (
