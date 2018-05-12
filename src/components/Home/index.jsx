@@ -15,15 +15,15 @@ import Select from 'material-ui/Select';
 // SVG icons
 import IconAdd from '@material-ui/icons/Add';
 import IconFile from '@material-ui/icons/InsertDriveFile';
+import IconInsertDriveFile from '@material-ui/icons/InsertDriveFile';
 
 export default class extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
             status: '',
             forms: [],
-            filters: ':ALL:',
+            filter: ':ALL:',
         };
     }
 
@@ -35,9 +35,7 @@ export default class extends React.Component {
                     forms,
                 });
             })
-            .catch((reason) => {
-                console.error(':::', reason);
-            });
+            .catch((reason) =>  console.error(':::', reason));
     }
 
     render () {
@@ -53,24 +51,22 @@ export default class extends React.Component {
                 }}>
                     <FormControl component='div'>
                         <Select
-                            value={this.state.filters}
+                            value={this.state.filter}
                             input={<Input name='filter' />}
                             autoWidth
                             onChange={(event) => this.setState(
                                 {
                                     status: ':LOADING:',
-                                    filters: event.target.value,
+                                    filter: event.target.value,
                                 },
-                                () => this.props.lib.getForms(this.state.filters)
+                                () => this.props.lib.getForms(this.state.filter)
                                     .then((forms) => {
                                         this.setState({
                                             status: ':READY:',
                                             forms,
                                         });
                                     })
-                                    .catch((reason) => {
-                                        console.error(':::', reason);
-                                    }),
+                                    .catch((reason) =>  console.error(':::', reason)),
                             )}
                         >
                             <MenuItem value=':ALL:'><em>All</em></MenuItem>
@@ -83,9 +79,17 @@ export default class extends React.Component {
                         <Button
                             variant='raised'
                             color='primary'
+                            style={{ marginRight: this.props.theme.spacing.unit + 'px' }}
                             onClick={() => this.props.onSetRouter(':FORM:ADD_NEW:')}
                         >
-                            <IconAdd /> Add new
+                            <IconAdd /> Add New
+                        </Button>
+                        <Button
+                            variant='raised'
+                            color='primary'
+                            onClick={() => this.props.onSetRouter(':REPORT:')}
+                        >
+                            <IconInsertDriveFile /> Report
                         </Button>
                     </div>
                 </div>
@@ -99,11 +103,11 @@ export default class extends React.Component {
                             onClick={() => this.props.onSetRouter(':FORM:EDIT:', { id: form.id })}
                         >
                             <Avatar>
-                                <IconFile />
+                                <IconFile color={form.status === ':COMPLETED:' ? 'primary' : 'secondary'}/>
                             </Avatar>
                             <ListItemText
                                 primary={form.dgs}
-                                secondary={`Created at: ${moment.unix(form.createdAt).format('YYYY-MM-DD')}, Updated at: ${form.updatedAt ? moment.unix(form.updatedAt).format('YYYY-MM-DD'): '---'}`}
+                                secondary={`Created at: ${moment.unix(form.createdAt).format('YYYY-MM-DD HH:mm')}, Updated at: ${moment.unix(form.updatedAt).format('YYYY-MM-DD HH:mm')}`}
                             />
                         </ListItem>
                     ))}

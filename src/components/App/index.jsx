@@ -5,8 +5,10 @@ import CssBaseline from 'material-ui/CssBaseline';
 import { withTheme } from 'material-ui/styles';
 
 import FormAddNew from '../FormAddNew/';
+import FormEdit from '../FormEdit/';
 import Home from '../Home/';
 import NavBar from '../NavBar/';
+import Report from '../Report/';
 
 import './style.css';
 
@@ -54,6 +56,8 @@ class App extends React.Component {
             case '':
             case ':HOME:': return <Home {...propSet} />;
             case ':FORM:ADD_NEW:': return <FormAddNew {...propSet} />;
+            case ':FORM:EDIT:': return <FormEdit {...propSet} />;
+            case ':REPORT:': return <Report {...propSet} />;
 
             default: return (
                 <React.Fragment>

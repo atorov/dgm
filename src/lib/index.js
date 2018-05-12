@@ -1,4 +1,9 @@
+export { default as createForm } from "./createForm";
 export { default as delay } from "./delay";
+export { default as deleteForm } from "./deleteForm";
 export { default as gdv } from "./getDeepValue";
 export { default as getDeepValue } from "./getDeepValue";
+export { default as getForm } from "./getForm";
 export { default as getForms } from "./getForms";
+export { default as getReport } from "./getReport";
+export { default as updateForm } from "./updateForm";

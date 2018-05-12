@@ -16,27 +16,31 @@ import Typography from 'material-ui/Typography';
 
 // SVG icons
 import IconCancel from '@material-ui/icons/Cancel';
+import IconDelete from '@material-ui/icons/Delete';
 import IconSave from '@material-ui/icons/Save';
 
 export default class extends React.Component {
-    constructor (props) {
+
+    constructor(props) {
         super(props);
         this.state = {
-            status: ':READY:',
-            data: {
-                dgs: '',
-                vac: null,
-                vdc: null,
-                notes: '',
-                status: ':IN_PROGRESS:',
-                createdAt: moment().unix(),
-                updatedAt: moment().unix(),
-                owner: 'Owner',
-            },
+            status: '',
+            data: {},
         };
     }
 
-    render () {
+    componentDidMount () {
+        this.props.lib.getForm(this.props.lib.getDeepValue(this.props, 'appState.router.params.id'))
+            .then((data) => {
+                this.setState({
+                    status: ':READY:',
+                    data,
+                });
+            })
+            .catch((reason) =>console.error(':::', reason));
+    }
+
+    render() {
         if (this.state.status !== ':READY:') return <LinearProgress />;
 
         return (
@@ -48,7 +52,7 @@ export default class extends React.Component {
                     alignItems: 'center',
                 }}>
                     <Typography variant='title'>
-                        Add new
+                        Edit
                     </Typography>
                     <div>
                         <Button
@@ -60,20 +64,36 @@ export default class extends React.Component {
                         <Button
                             variant='raised'
                             color='primary'
+                            style={{ marginRight: this.props.theme.spacing.unit + 'px' }}
                             onClick={() => this.setState(
                                 { status: ':PENDING:' },
-                                () => this.props.lib.createForm({
-                                    ...this.state.data,
-                                    updatedAt: moment().unix(),
-                                })
-                                    .then((data) => {
-                                        console.log('::: Created:', data);
-                                        this.props.onSetRouter(':FORM:EDIT:', { id: data.id });
-                                    })
-                                    .catch((reason) =>  console.error(':::', reason)),
+                                () => {
+                                    const data = {
+                                        ...this.state.data,
+                                        updatedAt: moment().unix(),
+                                    };
+                                    this.props.lib.updateForm(data)
+                                        .then((res) => this.setState({
+                                            status: ':READY:',
+                                            data:res,
+                                        }))
+                                        .catch((reason) => console.error(':::', reason));
+                                },
                             )}
                         >
-                            <IconSave />&nbsp;Save
+                            <IconSave />&nbsp;Update
+                        </Button>
+                        <Button
+                            variant='raised'
+                            color='secondary'
+                            onClick={() => this.setState(
+                                { status: ':PENDING:' },
+                                () => this.props.lib.deleteForm(this.state.data.id)
+                                    .then((data) => this.props.onSetRouter(':HOME:'))
+                                    .catch((reason) => console.error(':::', reason)),
+                            )}
+                        >
+                            <IconDelete />&nbsp;Delete
                         </Button>
                     </div>
                 </div>
@@ -93,7 +113,7 @@ export default class extends React.Component {
                     <FormHelperText>DGS type</FormHelperText>
                 </FormControl><br /><br />
 
-                <FormControl>
+                <FormControl >
                     <Input
                         name='vac'
                         value={this.state.data.vac || ''}
@@ -154,14 +174,21 @@ export default class extends React.Component {
 
                 <Typography variant='caption'>
                     Created at:
-                </Typography>
+                    </Typography>
                 <Typography variant='body2'>
                     {moment.unix(this.state.data.createdAt).format('YYYY-MM-DD HH:mm')}
                 </Typography><br />
 
                 <Typography variant='caption'>
+                    Updated at:
+                    </Typography>
+                <Typography variant='body2'>
+                    {moment.unix(this.state.data.updatedAt).format('YYYY-MM-DD HH:mm')}
+                </Typography><br />
+
+                <Typography variant='caption'>
                     Owner:
-                </Typography>
+                    </Typography>
                 <Typography variant='body2'>
                     {this.state.data.owner}
                 </Typography><br />
