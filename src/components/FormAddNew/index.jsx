@@ -66,10 +66,7 @@ export default class extends React.Component {
                                     ...this.state.data,
                                     updatedAt: moment().unix(),
                                 })
-                                    .then((data) => {
-                                        console.log('::: Created:', data);
-                                        this.props.onSetRouter(':FORM:EDIT:', { id: data.id });
-                                    })
+                                    .then((res) =>  this.props.onSetRouter(':FORM:EDIT:', { id: res.id }))
                                     .catch((reason) =>  console.error(':::', reason)),
                             )}
                         >
