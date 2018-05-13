@@ -29,7 +29,7 @@ export default class extends React.Component {
     }
 
     componentDidMount () {
-        this.props.lib.getForms()
+        this.props.lib.getForm(':ALL:')
             .then((forms) => {
                 this.setState({
                     status: ':READY:',
@@ -60,13 +60,8 @@ export default class extends React.Component {
                                     status: ':LOADING:',
                                     filter: event.target.value,
                                 },
-                                () => this.props.lib.getForms(this.state.filter)
-                                    .then((forms) => {
-                                        this.setState({
-                                            status: ':READY:',
-                                            forms,
-                                        });
-                                    })
+                                () => this.props.lib.getForm(':FILTERED:', { filter: this.state.filter })
+                                    .then((forms) => this.setState({ status: ':READY:', forms }))
                                     .catch((reason) =>  console.error(':::', reason)),
                             )}
                         >

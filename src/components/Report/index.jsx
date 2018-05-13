@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
-// import { LinearProgress } from 'material-ui/Progress';
+import { LinearProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 
 // SVG icons
@@ -30,16 +30,13 @@ export default class extends React.Component {
     componentDidMount () {
         this.props.lib.getReport()
             .then((data) => {
-                this.setState({
-                    status: ':READY:',
-                    data,
-                });
+                this.setState({ status: ':READY:', data });
             })
             .catch((reason) =>console.error(':::', reason));
     }
 
     render() {
-        // if (this.state.status !== ':READY:') return <LinearProgress />;
+        if (this.state.status !== ':READY:') return <LinearProgress />;
 
         return (
             <div>
@@ -72,11 +69,10 @@ export default class extends React.Component {
                         cy={175}
                         innerRadius={75}
                         outerRadius={150}
-                        fill='#82ca9d'
                         label
                     >
-                        <Cell fill='#00c49f' />
-                        <Cell fill='#0088fe' />
+                        <Cell fill={this.props.theme.palette.primary.main} />
+                        <Cell fill={this.props.theme.palette.secondary.main} />
                     </Pie>
                     <Tooltip />
                     <Legend />

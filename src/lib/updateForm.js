@@ -1,8 +1,16 @@
+import axios from 'axios';
+
 import delay from './delay';
 
 export default function (form) {
+    console.log('::: updateForm, PUT, { form }, <api>/form:');
     return delay(400)
-        .then(() => {
-            return form;
+        .then(() => axios.put(
+            'https://02obl744p3.execute-api.eu-central-1.amazonaws.com/dev/form',
+            form,
+        ))
+        .then((res) => {
+            console.log('::: res.data:', res.data);
+            return res.data;
         });
 }

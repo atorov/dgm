@@ -1,18 +1,21 @@
+import axios from 'axios';
+
 import delay from './delay';
 
-export default function (id) {
+export default function (type, cfg) {
+    console.log('::: createForm, GET, <api>/form/{type}?{params}:');
     return delay(400)
         .then(() => {
-            return {
-                id,
-                dgs: 'DEP-110 WX',
-                vac: 227,
-                vdc: 14,
-                notes: 'Notes ...',
-                status: ':COMPLETED:',
-                createdAt: 1525203589,
-                updatedAt: 1525213589,
-                owner: 'Owner',
-            };
+            const url = 'https://02obl744p3.execute-api.eu-central-1.amazonaws.com/dev/form';
+            switch (type) {
+                case ':ALL:': return axios.get(url + '/all');
+                case ':FILTERED:': return axios.get(url + '/filtered');
+                case ':SINGLE:': return axios.get(url + '/single');
+                default: return Promise.resolve({ data: [] });
+            }
+        })
+        .then((res) => {
+            console.log('::: res.data:', res.data);
+            return res.data;
         });
 }
