@@ -11,9 +11,6 @@ export default function (form) {
         ))
         .then((res) => {
             console.log('::: res:', res);
-            return {
-                ...res.data,
-                id: 'hhjasda43-asdase-234',
-            };
+            return res.data;
         });
 }
