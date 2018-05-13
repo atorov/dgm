@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import delay from './delay';
+import getDeepValue from './getDeepValue';
 
 export default function (type, cfg) {
     console.log('::: createForm, GET, <api>/form/{type}?{params}:');
@@ -15,7 +16,8 @@ export default function (type, cfg) {
             }
         })
         .then((res) => {
-            console.log('::: res.data:', res.data);
-            return res.data;
+            const items = getDeepValue(res, 'data.Items') || [];
+            console.log('::: res.data.Items:', items);
+            return items;
         });
 }

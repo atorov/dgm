@@ -1,5 +1,4 @@
 import React from 'react';
-
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
@@ -100,21 +99,29 @@ export default class extends React.Component {
                 <br /><Divider /><br />
 
                 <List>
-                    {this.state.forms.map((form) => (
-                        <ListItem
-                            key={form.id}
-                            button
-                            onClick={() => this.props.onSetRouter(':FORM:EDIT:', { id: form.id })}
-                        >
-                            <Avatar>
-                                <IconFile color={form.status === ':COMPLETED:' ? 'primary' : 'secondary'}/>
-                            </Avatar>
-                            <ListItemText
-                                primary={form.dgs}
-                                secondary={`Created at: ${moment.unix(form.createdAt).format('YYYY-MM-DD HH:mm')}, Updated at: ${moment.unix(form.updatedAt).format('YYYY-MM-DD HH:mm')}`}
-                            />
-                        </ListItem>
-                    ))}
+                    {this.state.forms.map((form) => {
+                        const id = this.props.lib.getDeepValue(form, 'id.S');
+                        const status = this.props.lib.getDeepValue(form, 'status.S');
+                        const dgs = this.props.lib.getDeepValue(form, 'dgs.S');
+                        const createdAt = +this.props.lib.getDeepValue(form, 'createdAt.N');
+                        const updatedAt = +this.props.lib.getDeepValue(form, 'updatedAt.N');
+
+                        return (
+                            <ListItem
+                                key={id}
+                                button
+                                onClick={() => this.props.onSetRouter(':FORM:EDIT:', { id })}
+                            >
+                                <Avatar>
+                                    <IconFile color={status === ':COMPLETED:' ? 'primary' : 'secondary'}/>
+                                </Avatar>
+                                <ListItemText
+                                    primary={dgs}
+                                    secondary={`Created at: ${moment.unix(createdAt).format('YYYY-MM-DD HH:mm')}, Updated at: ${moment.unix(updatedAt).format('YYYY-MM-DD HH:mm')}`}
+                                />
+                            </ListItem>
+                        );
+                    })}
                 </List>
                 <br /><Divider /><br />
             </div>
