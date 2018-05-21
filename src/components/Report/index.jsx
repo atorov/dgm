@@ -6,7 +6,7 @@ import { LinearProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 
 // SVG icons
-import IconCancel from '@material-ui/icons/Cancel';
+import IconKeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 
 const Recharts = require('recharts');
 const {
@@ -51,10 +51,10 @@ export default class extends React.Component {
                     </Typography>
                     <div>
                         <Button
+                            variant='raised'
                             onClick={() => this.props.onSetRouter(':HOME:')}
-                            style={{ marginRight: this.props.theme.spacing.unit + 'px' }}
                         >
-                            <IconCancel />&nbsp;Cancel
+                            <IconKeyboardArrowLeft />&nbsp;Back
                         </Button>
                     </div>
                 </div>
