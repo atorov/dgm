@@ -25,7 +25,7 @@ export default class NavBar extends React.Component {
     }
 
     render() {
-        console.log(':::', pac);
+        console.log('::: package.json:', pac);
 
         return (
             <AppBar position='static'>
