@@ -3,16 +3,16 @@ import axios from 'axios';
 import delay from './delay';
 import getDeepValue from './getDeepValue';
 
-export default function (type, cfg) {
+export default function (type, cfg = {}) {
     console.log('::: createForm, GET, <api>/form/{type}?{params}:');
     return delay(400)
         .then(() => {
             const url = 'https://02obl744p3.execute-api.eu-central-1.amazonaws.com/dev/form';
             switch (type) {
                 case ':ALL:': return axios.get(url + '/all');
-                case ':FILTERED:': return axios.get(url + '/filtered');
+                case ':FILTERED:': return axios.get(url + '/filtered?filter=' + cfg.filter);
                 case ':SINGLE:': return axios.get(url + '/single');
-                default: return Promise.resolve({ data: [] });
+                default: return Promise.resolve({ data: { Items: [] } });
             }
         })
         .then((res) => {
