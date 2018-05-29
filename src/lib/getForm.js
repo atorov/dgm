@@ -16,8 +16,8 @@ export default function (type, cfg) {
             }
         })
         .then((res) => {
-            const items = getDeepValue(res, 'data.Items') || [];
-            console.log('::: res.data.Items:', items);
+            const items = getDeepValue(res, 'data.Items') || getDeepValue(res, 'data.Item') || [];
+            console.log('::: res.data.Item(s):', items);
             return items;
         });
 }

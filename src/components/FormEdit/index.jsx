@@ -31,7 +31,22 @@ export default class extends React.Component {
 
     componentDidMount () {
         this.props.lib.getForm(':SINGLE:', { id: this.props.lib.getDeepValue(this.props, 'appState.router.params.id') })
-            .then((res) => this.setState({ status: ':READY:', data: res[0] || {} }))
+            .then((res) => {
+                this.setState({
+                    status: ':READY:',
+                    data: {
+                        id: this.props.lib.getDeepValue(res, 'id.S'),
+                        dgs: this.props.lib.getDeepValue(res, 'dgs.S'),
+                        vac: this.props.lib.getDeepValue(res, 'vac.N'),
+                        vdc: this.props.lib.getDeepValue(res, 'vdc.N'),
+                        notes: this.props.lib.getDeepValue(res, 'notes.S'),
+                        status: this.props.lib.getDeepValue(res, 'status.S'),
+                        createdAt: +this.props.lib.getDeepValue(res, 'createdAt.N'),
+                        updatedAt: +this.props.lib.getDeepValue(res, 'updatedAt.N'),
+                        owner: this.props.lib.getDeepValue(res, 'owner.S'),
+                    },
+                });
+            })
             .catch((reason) =>console.error(':::', reason));
     }
 
@@ -70,7 +85,7 @@ export default class extends React.Component {
                                     this.props.lib.updateForm(data)
                                         .then((res) => this.setState({
                                             status: ':READY:',
-                                            data:res,
+                                            data: res,
                                         }))
                                         .catch((reason) => console.error(':::', reason));
                                 },
@@ -93,6 +108,15 @@ export default class extends React.Component {
                     </div>
                 </div>
                 <br /><Divider /><br />
+
+                <FormControl fullWidth>
+                    <Input
+                        name='id'
+                        value={this.state.data.id || ''}
+                        disabled
+                    />
+                    <FormHelperText>Document ID</FormHelperText>
+                </FormControl><br /><br />
 
                 <FormControl fullWidth>
                     <Input
