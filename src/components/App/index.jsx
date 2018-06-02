@@ -5,6 +5,7 @@ import CssBaseline from 'material-ui/CssBaseline';
 import { withTheme } from 'material-ui/styles';
 
 import APIHealth from '../APIHealth/';
+import ConfirmCode from '../Auth/ConfirmCode/';
 import FormAddNew from '../FormAddNew/';
 import FormEdit from '../FormEdit/';
 import Home from '../Home/';
@@ -68,12 +69,12 @@ class App extends React.Component {
         if (!this.state.auth.signedIn) {
             switch (this.state.router.path) {
                 case ':AUTH:SIGN_UP:': return <SignUp {...propSet} />;
+                case ':AUTH:CONFIRM_CODE:': return <ConfirmCode {...propSet} />;
                 case ':AUTH:SIGN_IN:':
                 default: return <SignIn {...propSet} />;
             }
         }
         else {
-
             switch (this.state.router.path) {
                 case ':API:HEALTH:': return <APIHealth {...propSet} />;
                 case ':FORM:ADD_NEW:': return <FormAddNew {...propSet} />;

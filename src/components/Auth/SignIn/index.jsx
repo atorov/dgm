@@ -17,6 +17,7 @@ import Typography from 'material-ui/Typography';
 // SVG icons
 import IconAccountBox from '@material-ui/icons/AccountBox';
 import IconAccountCircle from '@material-ui/icons/AccountCircle';
+import IconCheckCircle from '@material-ui/icons/CheckCircle';
 
 export default class extends React.Component {
 //     constructor(props) {
@@ -68,6 +69,12 @@ export default class extends React.Component {
                             onClick={() => this.props.onSetRouter(':AUTH:SIGN_UP:')}
                         >
                             <IconAccountBox />&nbsp;Sign Up
+                        </Button>
+                        <Button
+                            style={{ marginRight: this.props.theme.spacing.unit + 'px' }}
+                            onClick={() => this.props.onSetRouter(':AUTH:CONFIRM_CODE:')}
+                        >
+                            <IconCheckCircle />&nbsp;Confirmation
                         </Button>
                         <Button
                             variant='raised'
