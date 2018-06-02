@@ -31,7 +31,7 @@ export default class extends React.Component {
                 status: ':IN_PROGRESS:',
                 createdAt: moment().unix(),
                 updatedAt: moment().unix(),
-                owner: 'Owner',
+                owner: this.props.appState.auth.username,
             },
         };
     }
