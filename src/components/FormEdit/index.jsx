@@ -37,8 +37,8 @@ export default class extends React.Component {
                     data: {
                         id: this.props.lib.getDeepValue(res, 'id.S'),
                         dgs: this.props.lib.getDeepValue(res, 'dgs.S'),
-                        vac: this.props.lib.getDeepValue(res, 'vac.N'),
-                        vdc: this.props.lib.getDeepValue(res, 'vdc.N'),
+                        vac: +this.props.lib.getDeepValue(res, 'vac.N'),
+                        vdc: +this.props.lib.getDeepValue(res, 'vdc.N'),
                         notes: this.props.lib.getDeepValue(res, 'notes.S'),
                         status: this.props.lib.getDeepValue(res, 'status.S'),
                         createdAt: +this.props.lib.getDeepValue(res, 'createdAt.N'),
@@ -52,6 +52,9 @@ export default class extends React.Component {
 
     render() {
         if (this.state.status !== ':READY:') return <LinearProgress />;
+
+        console.log('::: DATA:', this.state.data);
+
 
         return (
             <div>
