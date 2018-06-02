@@ -19,6 +19,18 @@ import pac from '../../package.sl.json';
 
 import './style.css';
 
+import {
+    // AuthenticationDetails,
+    CognitoUserPool,
+    // CognitoUserAttribute,
+    // CognitoUser,
+} from 'amazon-cognito-identity-js';
+
+const userPool = new CognitoUserPool({
+    UserPoolId: 'eu-central-1_pEt8B9Nwt',
+    ClientId: '7gsjfk51m5qp4hvknjtlse1enj',
+});
+
 class App extends React.Component {
     static propTypes = {};
 
@@ -26,7 +38,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             auth: {
-                signedIn: false,
+                username: '',
             },
             router: {
                 path: '',
@@ -37,9 +49,33 @@ class App extends React.Component {
 
     componentDidMount() {
         console.log('::: package.json:', pac);
+        this.setAuthenticated();
+    }
+
+    componentDidUpdate() {
+        this.setAuthenticated();
     }
 
     // Helpers -----------------------------------------------------------------
+    setAuthenticated = () => {
+        const user = userPool.getCurrentUser();
+        if (!user) this.onSetAuth({ username: '' });
+        else {
+            user.getSession((err, session) => {
+                if (err) {
+                    console.error(':::', err);
+                    this.onSetAuth({ username: '' });
+                }
+                else {
+                    if (!session.isValid()) this.onSetAuth({ username: '' });
+                    else this.onSetAuth({ username: user.username });
+                }
+            });
+        }
+    }
+
+    onSetAuth = (obj, cb) => JSON.stringify(obj) !== JSON.stringify(this.state.auth) && this.setState({ auth: { ...this.state.auth, ...obj } }, cb);
+
     onSetRouter = (path, params, cb) => this.setState({ router: { ...this.state.router, path, params } }, cb);
 
     onSetState = (obj, cb) => this.setState(obj, cb);
@@ -49,6 +85,7 @@ class App extends React.Component {
         const propSet = {
             ...this.props,
             appState: this.state,
+            onSetAuth: this.onSetAuth,
             onSetRouter: this.onSetRouter,
             onSetState: this.onSetState,
             pac,
@@ -67,7 +104,7 @@ class App extends React.Component {
 
     // Router ------------------------------------------------------------------
     router = (propSet) => {
-        if (!this.state.auth.signedIn) {
+        if (!this.state.auth.username) {
             switch (this.state.router.path) {
                 case ':AUTH:SIGN_UP:': return <SignUp {...propSet} />;
                 case ':AUTH:CONFIRM_CODE:': return <ConfirmCode {...propSet} />;

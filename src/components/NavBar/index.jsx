@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -11,6 +10,19 @@ import Typography from 'material-ui/Typography';
 // import IconAccountCircle from '@material-ui/icons/AccountCircle';
 import IconHome from '@material-ui/icons/Home';
 // import IconMenu from '@material-ui/icons/Menu';
+import IconPowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
+
+import {
+    // AuthenticationDetails,
+    CognitoUserPool,
+    // CognitoUserAttribute,
+    // CognitoUser,
+} from 'amazon-cognito-identity-js';
+
+const userPool = new CognitoUserPool({
+    UserPoolId: 'eu-central-1_pEt8B9Nwt',
+    ClientId: '7gsjfk51m5qp4hvknjtlse1enj',
+});
 
 export default class NavBar extends React.Component {
     static propTypes = {};
@@ -67,6 +79,26 @@ export default class NavBar extends React.Component {
                             Option 2
                         </MenuItem>
                     </Menu> */}
+                    {this.props.appState.auth.username && (
+                        <React.Fragment>
+                            <Typography
+                                variant='body2'
+                                color='inherit'
+                                align='right'
+                            >
+                                {this.props.appState.auth.username}
+                            </Typography>
+                            <IconButton
+                                color='inherit'
+                                onClick={() => {
+                                    userPool.getCurrentUser().signOut();
+                                    this.props.onSetAuth({ username: '' });
+                                }}
+                            >
+                                <IconPowerSettingsNew />
+                            </IconButton>
+                        </React.Fragment>
+                    )}
                 </Toolbar>
             </AppBar>
         );

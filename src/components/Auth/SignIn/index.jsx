@@ -86,19 +86,11 @@ export default class extends React.Component {
                                             {
                                                 onSuccess: (res) => {
                                                     console.log('::: res:', res);
-                                                    this.props.onSetState(
-                                                        {
-                                                            auth: {
-                                                                ...this.props.appState.auth,
-                                                                signedIn: true,
-                                                            },
-                                                        },
-                                                        () => this.props.onSetRouter(':HOME:'),
-                                                    );
+                                                    this.props.onSetRouter(':HOME:');
                                                 },
                                                 onFailure: (err) => {
                                                     console.error(':::', err);
-                                                    return this.setState({ ...INIT_STATE });
+                                                    this.setState({ ...INIT_STATE });
                                                 },
                                             },
                                         );
