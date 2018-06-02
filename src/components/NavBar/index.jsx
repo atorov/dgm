@@ -92,7 +92,7 @@ export default class NavBar extends React.Component {
                                 color='inherit'
                                 onClick={() => {
                                     userPool.getCurrentUser().signOut();
-                                    this.props.onSetAuth({ username: '' });
+                                    this.props.onSetState({}); // force update
                                 }}
                             >
                                 <IconPowerSettingsNew />

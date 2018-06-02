@@ -31,20 +31,23 @@ const userPool = new CognitoUserPool({
     ClientId: '7gsjfk51m5qp4hvknjtlse1enj',
 });
 
+const INIT_STATE = {
+    auth: {
+        username: '',
+        idToken: '',
+    },
+    router: {
+        path: '',
+        params: {},
+    },
+};
+
 class App extends React.Component {
     static propTypes = {};
 
     constructor (props) {
         super(props);
-        this.state = {
-            auth: {
-                username: '',
-            },
-            router: {
-                path: '',
-                params: {},
-            },
-        };
+        this.state = INIT_STATE;
     }
 
     componentDidMount() {
@@ -59,16 +62,19 @@ class App extends React.Component {
     // Helpers -----------------------------------------------------------------
     setAuthenticated = () => {
         const user = userPool.getCurrentUser();
-        if (!user) this.onSetAuth({ username: '' });
+        if (!user) this.onSetAuth({ ...INIT_STATE.auth });
         else {
             user.getSession((err, session) => {
                 if (err) {
                     console.error(':::', err);
-                    this.onSetAuth({ username: '' });
+                    this.onSetAuth({ ...INIT_STATE.auth });
                 }
                 else {
-                    if (!session.isValid()) this.onSetAuth({ username: '' });
-                    else this.onSetAuth({ username: user.username });
+                    if (!session.isValid()) this.onSetAuth({ ...INIT_STATE.auth });
+                    else this.onSetAuth({
+                        username: user.username,
+                        idToken: session.getIdToken().getJwtToken(),
+                    });
                 }
             });
         }
