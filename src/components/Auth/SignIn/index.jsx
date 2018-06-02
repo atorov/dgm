@@ -15,6 +15,18 @@ import IconAccountBox from '@material-ui/icons/AccountBox';
 import IconAccountCircle from '@material-ui/icons/AccountCircle';
 import IconCheckCircle from '@material-ui/icons/CheckCircle';
 
+import {
+    AuthenticationDetails,
+    CognitoUserPool,
+    // CognitoUserAttribute,
+    CognitoUser,
+} from 'amazon-cognito-identity-js';
+
+const userPool = new CognitoUserPool({
+    UserPoolId: 'eu-central-1_pEt8B9Nwt',
+    ClientId: '7gsjfk51m5qp4hvknjtlse1enj',
+});
+
 const INIT_STATE = {
     status: '',
     username: '',
@@ -58,7 +70,41 @@ export default class extends React.Component {
                             variant='raised'
                             color='primary'
                             disabled={!this.state.username || !this.state.password}
-                            onClick={() => {}}
+                            onClick={() => {
+                                const cognitoUser = new CognitoUser({
+                                    Username: this.state.username,
+                                    Pool: userPool,
+                                });
+                                this.setState(
+                                    { status: ":LOADING:" },
+                                    () => {
+                                        cognitoUser.authenticateUser(
+                                            new AuthenticationDetails({
+                                                Username: this.state.username,
+                                                Password: this.state.password,
+                                            }),
+                                            {
+                                                onSuccess: (res) => {
+                                                    console.log('::: res:', res);
+                                                    this.props.onSetState(
+                                                        {
+                                                            auth: {
+                                                                ...this.props.appState.auth,
+                                                                signedIn: true,
+                                                            },
+                                                        },
+                                                        () => this.props.onSetRouter(':HOME:'),
+                                                    );
+                                                },
+                                                onFailure: (err) => {
+                                                    console.error(':::', err);
+                                                    return this.setState({ ...INIT_STATE });
+                                                },
+                                            },
+                                        );
+                                    },
+                                );
+                            }}
                         >
                             <IconAccountCircle />&nbsp;Sign In
                         </Button>

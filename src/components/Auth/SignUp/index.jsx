@@ -15,6 +15,7 @@ import IconAccountBox from '@material-ui/icons/AccountBox';
 import IconCancel from '@material-ui/icons/Cancel';
 
 import {
+    // AuthenticationDetails,
     CognitoUserPool,
     CognitoUserAttribute,
     // CognitoUser,

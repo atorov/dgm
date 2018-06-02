@@ -4,15 +4,16 @@ import React from 'react';
 import CssBaseline from 'material-ui/CssBaseline';
 import { withTheme } from 'material-ui/styles';
 
-import APIHealth from '../APIHealth/';
 import ConfirmCode from '../Auth/ConfirmCode/';
+import SignIn from '../Auth/SignIn/';
+import SignUp from '../Auth/SignUp/';
+
+import APIHealth from '../APIHealth/';
 import FormAddNew from '../FormAddNew/';
 import FormEdit from '../FormEdit/';
 import Home from '../Home/';
 import NavBar from '../NavBar/';
 import Report from '../Report/';
-import SignIn from '../Auth/SignIn/';
-import SignUp from '../Auth/SignUp/';
 
 import pac from '../../package.sl.json';
 

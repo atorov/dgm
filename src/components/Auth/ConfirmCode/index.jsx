@@ -15,6 +15,7 @@ import IconCancel from '@material-ui/icons/Cancel';
 import IconCheckCircle from '@material-ui/icons/CheckCircle';
 
 import {
+    // AuthenticationDetails,
     CognitoUserPool,
     // CognitoUserAttribute,
     CognitoUser,
