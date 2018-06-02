@@ -35,7 +35,7 @@ const INIT_STATE = {
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        this.state = INIT_STATE;
+        this.state = { ...INIT_STATE };
     }
 
     render() {
@@ -80,7 +80,7 @@ export default class extends React.Component {
                                             (err, res) => {
                                                 if (err) {
                                                     console.error(':::', err);
-                                                    return this.setState(INIT_STATE);
+                                                    return this.setState({ ...INIT_STATE });
                                                 }
                                                 console.log('::: res:', res);
                                                 this.props.onSetRouter(':AUTH:CONFIRM_CODE:');
