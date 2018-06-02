@@ -1,6 +1,6 @@
 {
   "name": "dgm",
-  "version": "0.4.9a",
+  "version": "0.5.0",
   "private": true,
   "description": "Diesel Generator Set Maintenance",
   "keywords": [
@@ -25,6 +25,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
+    "amazon-cognito-identity-js": "^2.0.6",
     "axios": "^0.18.0",
     "material-ui": "^1.0.0-beta.41",
     "moment": "^2.22.1",

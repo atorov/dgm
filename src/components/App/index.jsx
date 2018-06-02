@@ -10,6 +10,10 @@ import FormEdit from '../FormEdit/';
 import Home from '../Home/';
 import NavBar from '../NavBar/';
 import Report from '../Report/';
+import SignIn from '../Auth/SignIn/';
+import SignUp from '../Auth/SignUp/';
+
+import pac from '../../package.sl.json';
 
 import './style.css';
 
@@ -19,11 +23,18 @@ class App extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
+            auth: {
+                signedIn: false,
+            },
             router: {
                 path: '',
                 params: {},
             },
         };
+    }
+
+    componentDidMount() {
+        console.log('::: package.json:', pac);
     }
 
     // Helpers -----------------------------------------------------------------
@@ -38,6 +49,7 @@ class App extends React.Component {
             appState: this.state,
             onSetRouter: this.onSetRouter,
             onSetState: this.onSetState,
+            pac,
         };
 
         return (
@@ -53,21 +65,31 @@ class App extends React.Component {
 
     // Router ------------------------------------------------------------------
     router = (propSet) => {
-        switch (this.state.router.path) {
-            case ':API:HEALTH:': return <APIHealth {...propSet} />;
-            case ':FORM:ADD_NEW:': return <FormAddNew {...propSet} />;
-            case ':FORM:EDIT:': return <FormEdit {...propSet} />;
-            case '':
-            case ':HOME:': return <Home {...propSet} />;
-            case ':REPORT:': return <Report {...propSet} />;
+        if (!this.state.auth.signedIn) {
+            switch (this.state.router.path) {
+                case ':AUTH:SIGN_UP:': return <SignUp {...propSet} />;
+                case ':AUTH:SIGN_IN:':
+                default: return <SignIn {...propSet} />;
+            }
+        }
+        else {
 
-            default: return (
-                <React.Fragment>
-                    <h1>404 Not found!</h1>
-                    <p><strong>path:</strong> <em>{this.state.router.path}</em></p>
-                    <p><strong>params:</strong> <em>{JSON.stringify(this.state.router.params, null, 2)}</em></p>
-                </React.Fragment>
-            );
+            switch (this.state.router.path) {
+                case ':API:HEALTH:': return <APIHealth {...propSet} />;
+                case ':FORM:ADD_NEW:': return <FormAddNew {...propSet} />;
+                case ':FORM:EDIT:': return <FormEdit {...propSet} />;
+                case '':
+                case ':HOME:': return <Home {...propSet} />;
+                case ':REPORT:': return <Report {...propSet} />;
+
+                default: return (
+                    <React.Fragment>
+                        <h1>404 Not found!</h1>
+                        <p><strong>path:</strong> <em>{this.state.router.path}</em></p>
+                        <p><strong>params:</strong> <em>{JSON.stringify(this.state.router.params, null, 2)}</em></p>
+                    </React.Fragment>
+                );
+            }
         }
     };
 }

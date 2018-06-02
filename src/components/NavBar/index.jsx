@@ -12,8 +12,6 @@ import Typography from 'material-ui/Typography';
 import IconHome from '@material-ui/icons/Home';
 // import IconMenu from '@material-ui/icons/Menu';
 
-import pac from '../../package.sl.json';
-
 export default class NavBar extends React.Component {
     static propTypes = {};
 
@@ -25,8 +23,6 @@ export default class NavBar extends React.Component {
     }
 
     render() {
-        console.log('::: package.json:', pac);
-
         return (
             <AppBar position='static'>
                 <Toolbar>
@@ -51,7 +47,7 @@ export default class NavBar extends React.Component {
                         }}
                         onClick={(event) => this.props.onSetRouter(':HOME:')}
                     >
-                        {pac.name.toUpperCase()} / {pac.version}
+                        {this.props.pac.name.toUpperCase()} / {this.props.pac.version}
                     </Typography>
                     {/* <IconButton
                         color='inherit'
