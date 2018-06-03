@@ -28,10 +28,7 @@ export default class extends React.Component {
     }
 
     componentDidMount () {
-        this.props.lib.getForm(
-            ':ALL:',
-            this.props.appState.auth.idToken,
-        )
+        this.props.lib.getForm(this.state.filter, this.props.appState.auth.idToken)
             .then((forms) => {
                 this.setState({
                     status: ':READY:',
@@ -62,11 +59,7 @@ export default class extends React.Component {
                                     status: ':LOADING:',
                                     filter: event.target.value,
                                 },
-                                () => this.props.lib.getForm(
-                                    ':FILTERED:',
-                                    this.props.appState.auth.idToken,
-                                    { filter: this.state.filter },
-                                )
+                                () => this.props.lib.getForm(this.state.filter, this.props.appState.auth.idToken)
                                     .then((forms) => this.setState({ status: ':READY:', forms }))
                                     .catch((reason) =>  console.error(':::', reason)),
                             )}

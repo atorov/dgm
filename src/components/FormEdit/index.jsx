@@ -31,9 +31,9 @@ export default class extends React.Component {
 
     componentDidMount () {
         this.props.lib.getForm(
-            ':SINGLE:',
+            null,
             this.props.appState.auth.idToken,
-            { id: this.props.lib.getDeepValue(this.props, 'appState.router.params.id') },
+            this.props.lib.getDeepValue(this.props, 'appState.router.params.id'),
         )
             .then((res) => {
                 this.setState({
