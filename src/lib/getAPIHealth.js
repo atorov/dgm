@@ -8,6 +8,6 @@ export default function (id) {
         .then(() => axios.get('https://02obl744p3.execute-api.eu-central-1.amazonaws.com/dev/health'))
         .then((res) => {
             console.log('::: res.data:', res.data);
-            return res;
+            return res.data;
         });
 }
