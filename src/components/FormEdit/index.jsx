@@ -89,7 +89,7 @@ export default class extends React.Component {
                                         ...this.state.data,
                                         updatedAt: moment().unix(),
                                     };
-                                    this.props.lib.updateForm(data)
+                                    this.props.lib.updateForm(data, this.props.appState.auth.idToken)
                                         .then((res) => this.setState({
                                             status: ':READY:',
                                             data: res,
@@ -105,7 +105,7 @@ export default class extends React.Component {
                             color='secondary'
                             onClick={() => this.setState(
                                 { status: ':PENDING:' },
-                                () => this.props.lib.deleteForm(this.state.data.id)
+                                () => this.props.lib.deleteForm(this.state.data.id, this.props.appState.auth.idToken)
                                     .then((data) => this.props.onSetRouter(':HOME:'))
                                     .catch((reason) => console.error(':::', reason)),
                             )}

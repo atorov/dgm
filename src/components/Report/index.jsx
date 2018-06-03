@@ -28,7 +28,7 @@ export default class extends React.Component {
     }
 
     componentDidMount () {
-        this.props.lib.getReport()
+        this.props.lib.getReport(this.props.appState.auth.idToken)
             .then((data) => {
                 this.setState({ status: ':READY:', data });
             })

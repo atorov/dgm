@@ -62,10 +62,13 @@ export default class extends React.Component {
                             color='primary'
                             onClick={() => this.setState(
                                 { status: ':PENDING:' },
-                                () => this.props.lib.createForm({
-                                    ...this.state.data,
-                                    updatedAt: moment().unix(),
-                                })
+                                () => this.props.lib.createForm(
+                                    {
+                                        ...this.state.data,
+                                        updatedAt: moment().unix(),
+                                    },
+                                    this.props.appState.auth.idToken,
+                                )
                                     .then((res) =>  this.props.onSetRouter(':FORM:EDIT:', { id: res.id }))
                                     .catch((reason) =>  console.error(':::', reason)),
                             )}

@@ -5,10 +5,11 @@ import getDeepValue from './getDeepValue';
 
 export default function (type, idToken, cfg = {}) {
     console.log('::: createForm, GET, <api>/form/{type}?{params}:');
+    const url = 'https://02obl744p3.execute-api.eu-central-1.amazonaws.com/dev/form';
+    const config = { 'headers': { 'Authorization': idToken } };
+
     return delay(400)
         .then(() => {
-            const url = 'https://02obl744p3.execute-api.eu-central-1.amazonaws.com/dev/form';
-            const config = { 'headers': { 'Authorization': idToken } };
             switch (type) {
                 case ':ALL:': return axios.get(url + '/all', config);
                 case ':FILTERED:': return axios.get(url + '/filtered?filter=' + cfg.filter, config);
