@@ -20,7 +20,7 @@ export default class extends React.Component {
     }
 
     componentDidMount () {
-        this.props.lib.getAPIHealth()
+        this.props.lib.getAPIHealth(this.props.appState.auth.idToken)
             .then((res) => this.setState({ status: ':READY:', res }))
             .catch((reason) => console.error(':::', reason));
     }
