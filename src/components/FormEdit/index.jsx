@@ -164,7 +164,7 @@ export default class extends React.Component {
                             },
                         })}
                     />
-                    <FormHelperText>DC voltage, [VAC]</FormHelperText>
+                    <FormHelperText>DC voltage, [VDC]</FormHelperText>
                 </FormControl><br /><br />
 
                 <FormControl fullWidth>
